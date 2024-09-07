@@ -18,3 +18,11 @@ variable "lambdas" {
   type = map(object({ arn = string }))
   default = {}
 }
+variable "attributes" {
+  type = map(object({
+    type = string
+    mutable = bool
+    required = bool
+  }))
+  default = {}
+}

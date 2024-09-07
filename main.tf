@@ -21,6 +21,15 @@ resource "aws_cognito_user_pool" "main" {
       verify_auth_challenge_response = local.lambda_verify_auth_challenge_response_arn
     }
   }
+  dynamic "schema" {
+    for_each = var.attributes
+    content {
+      attribute_data_type = schema.value.type
+      name                = schema.key
+      mutable             = schema.value.mutable
+      required            = schema.value.required
+    }
+  }
 }
 
 resource "aws_lambda_permission" "cognito_to_lambda" {
