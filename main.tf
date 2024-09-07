@@ -23,8 +23,8 @@ resource "aws_cognito_user_pool" "main" {
   }
 }
 
-resource "aws_lambda_permission" "post_confirmation_cognito_lambda_invoke_permission" {
-  for_each = local.lambdas
+resource "aws_lambda_permission" "cognito_to_lambda" {
+  for_each = local.deduplicated_lambdas
   statement_id  = "AllowExecutionFromCognito"
   action        = "lambda:InvokeFunction"
   function_name = lookup(each.value, "arn", null)
