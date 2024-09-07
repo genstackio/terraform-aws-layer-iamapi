@@ -22,9 +22,40 @@ resource "aws_cognito_user_pool" "main" {
     }
   }
   dynamic "schema" {
-    for_each = var.attributes
+    for_each = {for k, v in var.attributes: k => v if v.type == "string"}
     content {
-      attribute_data_type = schema.value.type
+      attribute_data_type = "String"
+      name                = schema.key
+      mutable             = schema.value.mutable
+      required            = schema.value.required
+      string_attribute_constraints {
+      }
+    }
+  }
+  dynamic "schema" {
+    for_each = {for k, v in var.attributes: k => v if v.type == "number"}
+    content {
+      attribute_data_type = "Number"
+      name                = schema.key
+      mutable             = schema.value.mutable
+      required            = schema.value.required
+      number_attribute_constraints {
+      }
+    }
+  }
+  dynamic "schema" {
+    for_each = {for k, v in var.attributes: k => v if v.type == "boolean"}
+    content {
+      attribute_data_type = "Boolean"
+      name                = schema.key
+      mutable             = schema.value.mutable
+      required            = schema.value.required
+    }
+  }
+  dynamic "schema" {
+    for_each = {for k, v in var.attributes: k => v if v.type == "datetime"}
+    content {
+      attribute_data_type = "DateTime"
       name                = schema.key
       mutable             = schema.value.mutable
       required            = schema.value.required
