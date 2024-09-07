@@ -49,6 +49,6 @@ resource "aws_acm_certificate_validation" "cert" {
 
 resource "aws_cognito_user_pool_client" "client" {
   for_each = {for k in var.clients: k => {name = k}}
-  name = each.name
+  name = each.value.name
   user_pool_id = aws_cognito_user_pool.main.id
 }
