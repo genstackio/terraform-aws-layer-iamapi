@@ -45,7 +45,5 @@ locals {
     null != local.lambda_verify_auth_challenge_response ? { verify_auth_challenge_response = local.lambda_verify_auth_challenge_response } : {},
   )
 
-  deduplicated_lambdas = {for o in values(local.lambdas): o.arn => o}
-
   has_lambdas = length(local.lambdas) > 0
 }
