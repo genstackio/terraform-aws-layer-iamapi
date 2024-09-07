@@ -6,17 +6,20 @@ resource "aws_cognito_user_pool_domain" "main" {
 
 resource "aws_cognito_user_pool" "main" {
   name = var.name
-  lambda_config {
-    create_auth_challenge          = local.lambda_create_auth_challenge_arn
-    pre_authentication             = local.lambda_pre_authentication_arn
-    post_authentication            = local.lambda_post_authentication_arn
-    custom_message                 = local.lambda_custom_message_arn
-    define_auth_challenge          = local.lambda_define_auth_challenge_arn
-    post_confirmation              = local.lambda_post_confirmation_arn
-    pre_sign_up                    = local.lambda_pre_sign_up_arn
-    pre_token_generation           = local.lambda_pre_token_generation_arn
-    user_migration                 = local.lambda_user_migration_arn
-    verify_auth_challenge_response = local.lambda_verify_auth_challenge_response_arn
+  dynamic "lambda_config" {
+    for_each = local.has_lambdas ? {y: true} : {}
+    content {
+      create_auth_challenge          = local.lambda_create_auth_challenge_arn
+      pre_authentication             = local.lambda_pre_authentication_arn
+      post_authentication            = local.lambda_post_authentication_arn
+      custom_message                 = local.lambda_custom_message_arn
+      define_auth_challenge          = local.lambda_define_auth_challenge_arn
+      post_confirmation              = local.lambda_post_confirmation_arn
+      pre_sign_up                    = local.lambda_pre_sign_up_arn
+      pre_token_generation           = local.lambda_pre_token_generation_arn
+      user_migration                 = local.lambda_user_migration_arn
+      verify_auth_challenge_response = local.lambda_verify_auth_challenge_response_arn
+    }
   }
 }
 

@@ -44,4 +44,6 @@ locals {
     null != local.lambda_user_migration ? { user_migration = local.lambda_user_migration } : {},
     null != local.lambda_verify_auth_challenge_response ? { verify_auth_challenge_response = local.lambda_verify_auth_challenge_response } : {},
   )
+
+  has_lambdas = length(local.lambdas) > 0
 }
