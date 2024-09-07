@@ -24,7 +24,7 @@ resource "aws_lambda_permission" "post_confirmation_cognito_lambda_invoke_permis
   for_each = local.lambdas
   statement_id  = "AllowExecutionFromCognito"
   action        = "lambda:InvokeFunction"
-  function_name = lookup(each.value, "arn")
+  function_name = lookup(each.value, "arn", null)
   principal     = "cognito-idp.amazonaws.com"
   source_arn    = aws_cognito_user_pool.main.arn
 }
