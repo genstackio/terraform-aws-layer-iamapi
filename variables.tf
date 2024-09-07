@@ -11,3 +11,7 @@ variable "clients" {
   type = list(string)
   default = []
 }
+variable "lambdas" {
+  type = map(object({ arn = string }))
+  default = {}
+}
