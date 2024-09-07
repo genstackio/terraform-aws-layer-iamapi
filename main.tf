@@ -46,3 +46,9 @@ resource "aws_acm_certificate_validation" "cert" {
     [for i,o in tolist(aws_acm_certificate.cert.domain_validation_options): substr(lookup(o, "resource_record_name"), 0, length(lookup(o, "resource_record_name")) - 1)  if (i > 0 && (lookup(o, "domain_name") != element(tolist(aws_acm_certificate.cert.domain_validation_options), 0).domain_name))]
   )
 }
+
+resource "aws_cognito_user_pool_client" "client" {
+  for_each = {for k in var.clients: k => {name = k}}
+  name = each.name
+  user_pool_id = aws_cognito_user_pool.main.id
+}

@@ -7,3 +7,7 @@ variable "dns" {
 variable "dns_zone" {
   type = string
 }
+variable "clients" {
+  type = list(string)
+  default = []
+}

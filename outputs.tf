@@ -5,6 +5,7 @@ output "user_pools" {
       name = aws_cognito_user_pool.main.name
       endpoint = aws_cognito_user_pool.main.endpoint
       id = aws_cognito_user_pool.main.id
+      clients = {for k,v in aws_cognito_user_pool_client.client: k => {name = v.name, id = v.id}}
     }
   }
 }
