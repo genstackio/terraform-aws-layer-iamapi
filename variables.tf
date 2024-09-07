@@ -8,7 +8,10 @@ variable "dns_zone" {
   type = string
 }
 variable "clients" {
-  type = list(string)
+  type = list(object({
+    name = string
+    flows = list(string)
+  }))
   default = []
 }
 variable "lambdas" {

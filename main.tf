@@ -25,12 +25,13 @@ resource "aws_cognito_user_pool" "main" {
 
 resource "aws_lambda_permission" "cognito_to_lambda" {
   for_each = local.lambdas
-  statement_id  = "AllowExecutionFromCognito"
+  statement_id  = "AllowExecutionFromCognito_${each.key}"
   action        = "lambda:InvokeFunction"
   function_name = lookup(each.value, "arn", null)
   principal     = "cognito-idp.amazonaws.com"
   source_arn    = aws_cognito_user_pool.main.arn
 }
+
 resource "aws_route53_record" "main" {
   zone_id = var.dns_zone
   name    = var.dns
@@ -71,7 +72,8 @@ resource "aws_acm_certificate_validation" "cert" {
 }
 
 resource "aws_cognito_user_pool_client" "client" {
-  for_each = {for k in var.clients: k => {name = k}}
-  name = each.value.name
-  user_pool_id = aws_cognito_user_pool.main.id
+  for_each = {for k,v in var.clients: v.name => v}
+  name                = each.value.name
+  user_pool_id        = aws_cognito_user_pool.main.id
+  explicit_auth_flows = each.value.flows
 }
