@@ -23,6 +23,7 @@ locals {
   // pre_token_generation
   lambda_pre_token_generation = lookup(var.lambdas, "pre_token_generation", null) != null ? var.lambdas["pre_token_generation"] : null
   lambda_pre_token_generation_arn = local.lambda_pre_token_generation != null ? lookup(local.lambda_pre_token_generation, "arn", null) : null
+  lambda_pre_token_generation_version = local.lambda_pre_token_generation != null ? lookup(local.lambda_pre_token_generation, "version", null) : null
   // user_migration
   lambda_user_migration = lookup(var.lambdas, "user_migration", null) != null ? var.lambdas["user_migration"] : null
   lambda_user_migration_arn = local.lambda_user_migration != null ? lookup(local.lambda_user_migration, "arn", null) : null

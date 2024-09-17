@@ -15,7 +15,7 @@ variable "clients" {
   default = []
 }
 variable "lambdas" {
-  type = map(object({ arn = string }))
+  type = map(object({ arn = string, version = optional(string) }))
   default = {}
 }
 variable "attributes" {

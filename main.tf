@@ -19,9 +19,15 @@ resource "aws_cognito_user_pool" "main" {
       define_auth_challenge          = local.lambda_define_auth_challenge_arn
       post_confirmation              = local.lambda_post_confirmation_arn
       pre_sign_up                    = local.lambda_pre_sign_up_arn
-      pre_token_generation           = local.lambda_pre_token_generation_arn
       user_migration                 = local.lambda_user_migration_arn
       verify_auth_challenge_response = local.lambda_verify_auth_challenge_response_arn
+      dynamic "pre_token_generation_config" {
+        for_each = null != local.lambda_pre_token_generation_arn ? {y: local.lambda_pre_token_generation_arn} : {}
+        content {
+          lambda_arn = local.lambda_pre_token_generation_arn
+          lambda_version = local.lambda_pre_token_generation_version
+        }
+      }
     }
   }
   dynamic "schema" {
