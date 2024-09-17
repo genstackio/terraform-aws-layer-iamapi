@@ -26,3 +26,7 @@ variable "attributes" {
   }))
   default = {}
 }
+variable "advanced_security_mode" {
+  type    = string
+  default = "OFF"
+}
