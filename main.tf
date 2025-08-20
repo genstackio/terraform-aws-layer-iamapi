@@ -6,6 +6,7 @@ resource "aws_cognito_user_pool_domain" "main" {
 
 resource "aws_cognito_user_pool" "main" {
   name = var.name
+  user_pool_tier = var.tier
   user_pool_add_ons {
     advanced_security_mode = var.advanced_security_mode
   }

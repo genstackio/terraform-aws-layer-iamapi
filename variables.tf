@@ -31,3 +31,7 @@ variable "advanced_security_mode" {
   type    = string
   default = "OFF"
 }
+variable "tier" {
+  type    = string
+  default = null
+}
