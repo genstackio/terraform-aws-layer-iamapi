@@ -125,7 +125,7 @@ resource "aws_cognito_user_pool_client" "client" {
   name                = each.value.name
   user_pool_id        = aws_cognito_user_pool.main.id
   explicit_auth_flows = each.value.flows
-  dynamic "refresh_token_validity" {
+  dynamic "refresh_token_rotation" {
     for_each = null != each.value.token_rotation_grace_period ? { x = 1} : {}
     content {
       feature                    = "ENABLED"
