@@ -11,6 +11,7 @@ variable "clients" {
   type = list(object({
     name = string
     flows = list(string)
+    token_rotation_grace_period = optional(number)
   }))
   default = []
 }
